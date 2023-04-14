@@ -1,0 +1,26 @@
+<!DOCTYPE >
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title>Ajax utilisation HTML</title>
+</head>
+<body>
+	<button onclick='addContent();' >ajouter des données</button>
+	<div id='dataList' style='border:solid 1px black;'  >
+	</div>
+	<script	>
+    function addContent() {
+      fetch('http://formation.anjousoft.fr/api/AJAX_DataBase.php?format=HTML')
+      .then(function(response){return response.text(); })
+      .then(function(text) {
+        document.querySelector("#dataList").innerHTML = text;
+      })
+    }
+
+    async function addContent2() {
+      fetch('http://formation.anjousoft.fr/api/AJAX_DataBase.php?format=JSON')
+      
+    }
+	</script>
+</body>
+</html>

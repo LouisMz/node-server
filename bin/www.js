@@ -3,24 +3,29 @@
 /**
  * Module dependencies.
  */
-
-var app = require('../app');
-var debug = require('debug')('node-server:server');
-var http = require('http');
+import app from '../app.js';
+import debug from 'debug';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const logger = debug('node-server:server');
+
+var port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-
+var server = createServer(app);
+const io = new Server(server)
+console.log(io);
 /**
  * Listen on provided port, on all network interfaces.
  */
