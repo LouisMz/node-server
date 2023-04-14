@@ -1,4 +1,3 @@
-import createError from 'http-errors';
 import express, { json, urlencoded } from 'express';
 import path, { join } from 'path';
 import cookieParser from 'cookie-parser';
@@ -6,7 +5,8 @@ import logger from 'morgan';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-import indexRouter from './routes/serveur.js';
+import indexRouter from './routes/router.js';
+import session from 'express-session';
 
 const app = express();
 var server = createServer(app);
@@ -29,19 +29,14 @@ app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.render('404.ejs', { title: '404' });
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
+app.use(session({
+  secret: 'My_digital_shcool',
+  resave: false,
+  saveUninitialized: false
+}))
 
 io.on('connection', (socket) => {
   console.log('a user connected');

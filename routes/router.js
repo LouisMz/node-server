@@ -16,6 +16,31 @@ const data = {
 	]
 };
 
+const user = {
+  "username": "admin",
+  "password": "admin",
+};
+
+function isLogin(req, res, next) {
+  if (req.session && req.session.isLogin) {
+    next();
+  } else {
+    res.redirect('/login',{title: 'Login'});
+  }
+}
+
+function Login(req, res, next) {
+  const { username, password } = req.body;
+  if (username == user.username && password == user.password){
+    req.session = {}
+    req.session.isLogin = true;
+    req.session.name = 'Clément';
+    next();
+  } else {
+    res.render('login.ejs', {title: 'Login', req: req});
+  }
+}
+
 function authorsPosts (id, type) {
   if (id) {
     const data = type.find(type => type.id == id);
@@ -30,19 +55,20 @@ function authorsPosts (id, type) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index.ejs', { title: 'Express' });
+  req = {}
+  res.render('index.ejs', { title: 'Express', req: req });
 });
 
 router.get('/chat', function(req, res, next) {
-  res.render('chat.ejs');
+  res.render('chat.ejs', { title: 'Chat', req: req });
 });
 
 router.get('/fetch', function(req, res, next) {
-  res.render('fetch.ejs');
+  res.render('fetch.ejs', { title: 'Ajax utilisation HTML', req: req });
 });
 
 router.get('/weather', function(req, res, next) {
-  res.render('weather.ejs');
+  res.render('weather.ejs', { title: 'Météo', req: req });
 })
 
 router.get('/data/authors/:id?', (req, res) => {
@@ -53,8 +79,17 @@ router.get('/data/posts/:id?', (req, res) => {
   res.end(authorsPosts(req.params.id, data.posts));
 })
 
-router.use((req, res, next) => {
-  res.render('404.ejs');
+router.get('/login', function(req, res, next) {
+  res.render('login.ejs', {title: 'Login', req: req})
+})
+
+router.post('/login', Login, (req, res) => {
+   res.redirect('/');
+})
+
+router.get('/logout', isLogin, (req, res) => {
+  req.session.destroy();
+  res.redirect('/login');
 })
 
 export default router;

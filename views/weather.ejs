@@ -1,10 +1,4 @@
-<!DOCTYPE>
-<html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<title>Ajax météo angevine</title>
-</head>
-<body>
+<%- include('./includes/header.ejs', { title: title, req: req }) %>
   <input id="input" placeholder="Entrer une ville"/>
   <button onclick='fecthWeather();' >Fetch létéo</button>
 	<div id='meteo'  >
@@ -26,5 +20,4 @@
     });
   }
 	</script>
-</body>
-</html>
+<%- include('./includes/footer.ejs') %>

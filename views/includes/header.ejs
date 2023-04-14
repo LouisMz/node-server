@@ -4,7 +4,201 @@
     <meta charset="UTF-8">
     <% if (title) { %>
     <title><%= title %></title>
+    <% } else { %>
+    <title>Default</title>
     <% } %>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      .error-container {
+        width: 50%;
+        margin: 50px auto;
+        text-align: center;
+      }
+
+      .error-container h1 {
+        font-size: 8em;
+        color: #333;
+        margin: 0;
+        line-height: 1em;
+      }
+
+      .error-container p {
+        font-size: 1.5em;
+        color: #666;
+        margin-top: 0;
+      }
+
+      .error-container a {
+        display: inline-block;
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+      }
+
+      .error-container a:hover {
+        background-color: #555;
+      }
+
+      nav {
+        background-color: #333;
+        color: #fff;
+        font-family: Arial, sans-serif;
+      }
+
+      nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      nav ul li {
+        margin: 0 10px;
+      }
+
+      nav ul li:first-child {
+        margin-left: 0;
+      }
+
+      nav ul li:last-child {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: #fff;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+
+      .nav-link:hover {
+        background-color: #fff;
+        color: #333;
+        transition: all 0.3s ease;
+      }
+      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem;}
+      #inputN { border: none; padding: 0 1rem; border-radius: 2rem; margin: 0.25rem; }
+      #input:focus { outline: none; }
+      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li:nth-child(odd) { background: #efefef; }
+
+      .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+      }
+
+      .login-container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      button[type="submit"] {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #4CAF50;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+      #input:focus { outline: none; }
+      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li:nth-child(odd) { background: #efefef; }
+
+      .login-container {
+        max-width: 450px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+      }
+
+      .login-container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+      }
+
+      button[type="submit"] {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #4CAF50;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -13,7 +207,11 @@
           <li><a href="/" class="nav-link">Accueil</a></li>
           <li><a href="/weather" class="nav-link">Météo</a></li>
           <li><a href="/chat" class="nav-link">Tchat</a></li>
-          <li><a href="/login" class="nav-link">Login</a></li>
+          <% if (req.session && req.session.isLogin) { %>
+            <li><a href="/logout" class="nav-link">Se déconnecter</a></li>
+          <% } else { %>
+            <li><a href="/login" class="nav-link">Login</a></li>
+          <% } %>
           <li><a href="/404" class="nav-link">404</a></li>
         </ul>
       </nav>      

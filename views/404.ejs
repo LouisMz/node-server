@@ -1,53 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Page introuvable</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-    }
-
-    .error-container {
-      width: 50%;
-      margin: 50px auto;
-      text-align: center;
-    }
-
-    .error-container h1 {
-      font-size: 8em;
-      color: #333;
-      margin: 0;
-      line-height: 1em;
-    }
-
-    .error-container p {
-      font-size: 1.5em;
-      color: #666;
-      margin-top: 0;
-    }
-
-    .error-container a {
-      display: inline-block;
-      background-color: #333;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      margin-top: 20px;
-    }
-
-    .error-container a:hover {
-      background-color: #555;
-    }
-  </style>
-</head>
-<body>
+<%- include('./includes/header.ejs', { title: title, req: req }) %>
   <div class="error-container">
     <h1>404</h1>
     <p>Oups! La page que vous recherchez est introuvable.</p>
     <a href="/">Retourner à la page d'accueil</a>
   </div>
-</body>
-</html>
+<%- include('./includes/footer.ejs') %>

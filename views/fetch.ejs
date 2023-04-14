@@ -1,12 +1,6 @@
-<!DOCTYPE >
-<html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<title>Ajax utilisation HTML</title>
-</head>
-<body>
+<%- include('./includes/header.ejs', { title: title, req: req }) %>
 	<button onclick='addContent();' >ajouter des données</button>
-	<div id='dataList' style='border:solid 1px black;'  >
+	<div id='dataList' style='border:solid 1px black;'  >fe
 	</div>
 	<script	>
     function addContent() {
@@ -22,5 +16,4 @@
       
     }
 	</script>
-</body>
-</html>
+<%- include('./includes/footer.ejs') %>
